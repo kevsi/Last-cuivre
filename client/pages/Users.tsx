@@ -70,7 +70,11 @@ function UsersPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRole, setSelectedRole] = useState<string>("all");
   const [selectedAge, setSelectedAge] = useState<string>("all");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
