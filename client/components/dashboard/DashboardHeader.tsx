@@ -1,4 +1,4 @@
-import { Search, Bell, User, LogOut, ChevronDown, Users } from "lucide-react";
+import { Search, Bell, User, LogOut, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,6 @@ import { useNotificationContext } from "@/main";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLogout } from "@/hooks/use-logout";
 import { UserProfileModal } from "@/components/ui/user-profile-modal";
-import { UsersModal } from "@/components/users/UsersModal";
 import { NotificationCenter } from "@/components/ui/notification-center";
 import { useState } from "react";
 import {
@@ -24,10 +23,9 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
   const { showNotifications, setShowNotifications } = useNotificationContext();
-  const { user, isOwner } = useAuth();
+  const { user } = useAuth();
   const { handleLogout } = useLogout();
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [showUsersModal, setShowUsersModal] = useState(false);
 
   const handleNotificationClick = () => {
     setShowNotifications(!showNotifications);
@@ -121,15 +119,6 @@ export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
                 <User className="mr-2 h-4 w-4" />
                 <span>Profil</span>
               </DropdownMenuItem>
-              {isOwner && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setShowUsersModal(true)}>
-                    <Users className="mr-2 h-4 w-4" />
-                    <span>Gestion Utilisateurs</span>
-                  </DropdownMenuItem>
-                </>
-              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
@@ -145,14 +134,6 @@ export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
         isOpen={showProfileModal}
         onClose={() => setShowProfileModal(false)}
       />
-
-      {/* Users Modal */}
-      {isOwner && (
-        <UsersModal
-          isOpen={showUsersModal}
-          onClose={() => setShowUsersModal(false)}
-        />
-      )}
     </header>
   );
 }
