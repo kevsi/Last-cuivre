@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNotificationContext } from "@/main";
+import { useAuth } from "@/contexts/AuthContext";
+import { useManagerLogout } from "@/hooks/use-manager-logout";
 import {
   DropdownMenu,
   DropdownMenuContent,
