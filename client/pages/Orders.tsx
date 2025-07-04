@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
-import { LayoutDashboard, Plus, ShoppingCart } from "lucide-react";
 import { OrdersHeader } from "../components/orders/OrdersHeader";
 import { OrdersFilters } from "../components/orders/OrdersFilters";
 import { OrdersTable } from "../components/orders/OrdersTable";
 import { HistorySidebar } from "@/components/dashboard/HistorySidebar";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { useOrders } from "@/hooks/api";
 import { OrderFilters } from "@/types/api";
 import { TableSkeleton } from "@/components/ui/loaders";
+import { getMainNavItems } from "@/lib/main-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface Order {
   id: string;
