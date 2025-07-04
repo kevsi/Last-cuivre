@@ -145,6 +145,14 @@ export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
         isOpen={showProfileModal}
         onClose={() => setShowProfileModal(false)}
       />
+
+      {/* Users Modal */}
+      {isOwner && (
+        <UsersModal
+          isOpen={showUsersModal}
+          onClose={() => setShowUsersModal(false)}
+        />
+      )}
     </header>
   );
 }
