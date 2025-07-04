@@ -83,7 +83,7 @@ export const ManagerOrdersHeader: React.FC<ManagerOrdersHeaderProps> = ({
                 <Avatar className="w-6 h-6 rounded-md">
                   <AvatarImage src="/placeholder.svg" alt="Profile" />
                   <AvatarFallback className="rounded-md text-xs bg-dashboard-yellow text-white">
-                    G1
+                    {getUserInitials()}
                   </AvatarFallback>
                 </Avatar>
                 <ChevronDown className="w-4 h-4 text-dashboard-dark" />
