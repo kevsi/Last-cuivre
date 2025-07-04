@@ -54,11 +54,20 @@ export function EditUserModal({
     }
   }, [user]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (user) {
-      onSave(user.id, formData);
-      onClose();
+      setIsLoading(true);
+
+      try {
+        // Simuler un délai API
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
+        onSave(user.id, formData);
+        onClose();
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
