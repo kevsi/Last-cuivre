@@ -9,17 +9,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ModernNotificationsPanel } from "@/components/ui/modern-notifications-panel";
 import { useState, createContext, useContext } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
-import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
-import NewOrder from "./pages/NewOrder";
-import Orders from "./pages/Orders";
-import Users from "./pages/Users";
-import ManagerDashboard from "./pages/ManagerDashboard";
-import ManagerOrders from "./pages/ManagerOrders";
-import ManagerArticles from "./pages/ManagerArticles";
-import ManagerProductDetails from "./pages/ManagerProductDetails";
-import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
+import { lazy, Suspense } from "react";
+import { Spinner } from "@/components/ui/loaders";
+
+// Lazy load des pages
+const Index = lazy(() => import("./pages/Index"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const NewOrder = lazy(() => import("./pages/NewOrder"));
+const Orders = lazy(() => import("./pages/Orders"));
+const Users = lazy(() => import("./pages/Users"));
+const ManagerDashboard = lazy(() => import("./pages/ManagerDashboard"));
+const ManagerOrders = lazy(() => import("./pages/ManagerOrders"));
+const ManagerArticles = lazy(() => import("./pages/ManagerArticles"));
+const ManagerProductDetails = lazy(
+  () => import("./pages/ManagerProductDetails"),
+);
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Login = lazy(() => import("./pages/Login"));
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { SessionManager } from "./components/auth/SessionManager";
 
