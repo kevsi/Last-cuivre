@@ -234,13 +234,34 @@ function UsersPage() {
         </div>
       </div>
 
+      {/* Modals */}
       {canAddUsers && (
         <AddUserModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
           onAddUser={handleAddUser}
         />
       )}
+
+      <ViewUserModal
+        isOpen={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        user={selectedUser}
+      />
+
+      <EditUserModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        user={selectedUser}
+        onSave={handleEditUser}
+      />
+
+      <DeleteUserModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        user={selectedUser}
+        onConfirm={handleDeleteUser}
+      />
     </ResponsiveLayout>
   );
 }
