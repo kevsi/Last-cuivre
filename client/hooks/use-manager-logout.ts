@@ -14,31 +14,46 @@ export function useManagerLogout() {
 
   const handleManagerLogout = async () => {
     setIsLoggingOut(true);
-    const userName = user ? `${user.prenoms} ${user.nom}` : "Manager";
 
-    // Nettoyage spécifique à l'environnement manager
-    localStorage.removeItem("managerSession");
-    localStorage.removeItem("managerActiveView");
-    localStorage.removeItem("managerLastActivity");
+    try {
+      const userName = user ? `${user.prenoms} ${user.nom}` : "Manager";
 
-    // Nettoyage général
-    localStorage.clear();
-    sessionStorage.clear();
+      // Simuler un délai de nettoyage sécurisé
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
-    // Appel de la déconnexion du contexte auth
-    logout();
+      // Nettoyage spécifique à l'environnement manager
+      localStorage.removeItem("managerSession");
+      localStorage.removeItem("managerActiveView");
+      localStorage.removeItem("managerLastActivity");
 
-    // Toast spécialisé pour managers
-    toast({
-      title: "Session Manager fermée",
-      description: `Au revoir ${user?.prenoms || "Manager"}! Votre session a été fermée en sécurité.`,
-      duration: 3000,
-    });
+      // Nettoyage général
+      localStorage.clear();
+      sessionStorage.clear();
 
-    // Navigation vers login avec remplacement de l'historique
-    setTimeout(() => {
-      navigate("/login", { replace: true });
-    }, 500);
+      // Appel de la déconnexion du contexte auth
+      logout();
+
+      // Toast spécialisé pour managers
+      toast({
+        title: "Session Manager fermée",
+        description: `Au revoir ${user?.prenoms || "Manager"}! Votre session a été fermée en sécurité.`,
+        duration: 3000,
+      });
+
+      // Navigation vers login avec remplacement de l'historique
+      setTimeout(() => {
+        navigate("/login", { replace: true });
+        setIsLoggingOut(false);
+      }, 500);
+    } catch (error) {
+      setIsLoggingOut(false);
+      toast({
+        title: "Erreur de déconnexion",
+        description:
+          "Une erreur s'est produite lors de la fermeture de session",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleQuickLogout = () => {
