@@ -19,25 +19,6 @@ export interface Article {
   category: string;
 }
 
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-    isActive: true,
-  },
-];
-
 const ManagerArticles: React.FC = () => {
   const { notifications } = useNotifications();
   const [searchQuery, setSearchQuery] = useState("");
