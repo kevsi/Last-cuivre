@@ -21,7 +21,7 @@ interface ManagerHeaderProps {
 export const ManagerHeader: React.FC<ManagerHeaderProps> = ({ leftAction }) => {
   const { showNotifications, setShowNotifications } = useNotificationContext();
   const { user } = useAuth();
-  const { handleManagerLogout } = useManagerLogout();
+  const { handleManagerLogout, isLoggingOut } = useManagerLogout();
 
   const getUserInitials = () => {
     if (!user) return "M";
