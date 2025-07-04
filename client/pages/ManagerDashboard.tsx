@@ -61,6 +61,9 @@ const sampleManagerOrders: ManagerOrder[] = [
 ];
 
 const ManagerDashboard: React.FC = () => {
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("dashboard", isOwner);
+
   return (
     <>
       <ManagerSessionManager />
