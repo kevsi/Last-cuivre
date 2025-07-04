@@ -42,6 +42,8 @@ export default function ManagerProductDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [product, setProduct] = useState<any>(null);
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("articles", isOwner);
 
   useEffect(() => {
     if (id && mockProducts[id as keyof typeof mockProducts]) {
