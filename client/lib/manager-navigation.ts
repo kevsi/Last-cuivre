@@ -1,4 +1,4 @@
-import { LayoutDashboard, ShoppingCart, Box, Users } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Box } from "lucide-react";
 import { NavItem } from "@/components/ui/responsive-sidebar";
 
 export function getManagerNavItems(
@@ -25,16 +25,6 @@ export function getManagerNavItems(
       isActive: activePage === "articles",
     },
   ];
-
-  // Si l'utilisateur est owner (admin), ajouter le lien utilisateurs
-  if (isOwner) {
-    baseNavItems.push({
-      href: "/users",
-      icon: Users,
-      label: "Utilisateurs",
-      isActive: activePage === "users",
-    });
-  }
 
   return baseNavItems;
 }
