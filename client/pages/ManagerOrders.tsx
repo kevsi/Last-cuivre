@@ -98,6 +98,8 @@ const sampleManagerOrders: ManagerOrder[] = [
 
 const ManagerOrders: React.FC = () => {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("orders", isOwner);
   const [orders, setOrders] = useState<ManagerOrder[]>(sampleManagerOrders);
   const [searchQuery, setSearchQuery] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
