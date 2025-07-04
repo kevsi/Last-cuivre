@@ -21,25 +21,6 @@ export interface ManagerOrder {
   createdAt: string;
 }
 
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-    isActive: true,
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-  },
-];
-
 const sampleManagerOrders: ManagerOrder[] = [
   {
     id: "1",
