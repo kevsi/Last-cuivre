@@ -42,7 +42,7 @@ export const ManagerOrdersHeader: React.FC<ManagerOrdersHeaderProps> = ({
         <div className="flex items-center gap-2 sm:gap-3 w-full lg:w-auto flex-shrink-0">
           {leftAction}
           <h1 className="text-sm sm:text-base lg:text-lg font-semibold text-dashboard-dark font-poppins truncate">
-            Hello, gérant
+            Hello, {user?.prenoms || "Manager"}
           </h1>
         </div>
 
