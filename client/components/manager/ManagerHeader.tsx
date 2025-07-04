@@ -102,9 +102,16 @@ export const ManagerHeader: React.FC<ManagerHeaderProps> = ({ leftAction }) => {
               <DropdownMenuItem
                 onClick={handleManagerLogout}
                 className="text-red-600"
+                disabled={isLoggingOut}
               >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Se déconnecter</span>
+                {isLoggingOut ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <LogOut className="mr-2 h-4 w-4" />
+                )}
+                <span>
+                  {isLoggingOut ? "Déconnexion..." : "Se déconnecter"}
+                </span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
