@@ -168,14 +168,27 @@ export function EditUserModal({
           </div>
 
           <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              disabled={isLoading}
+            >
               Annuler
             </Button>
             <Button
               type="submit"
               className="bg-dashboard-yellow hover:bg-dashboard-yellow/90"
+              disabled={isLoading}
             >
-              Sauvegarder
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Sauvegarde...
+                </>
+              ) : (
+                "Sauvegarder"
+              )}
             </Button>
           </div>
         </form>
