@@ -173,6 +173,34 @@ function UsersPage() {
     });
   };
 
+  const handleEditUser = (userId: string, userData: Partial<User>) => {
+    const updatedUsers = users.map((user) =>
+      user.id === userId ? { ...user, ...userData } : user,
+    );
+    setUsers(updatedUsers);
+    filterUsers(searchQuery, selectedRole, selectedAge, updatedUsers);
+
+    toast({
+      title: "Utilisateur modifié",
+      description: "Les informations ont été mises à jour avec succès",
+    });
+  };
+
+  const handleDeleteUser = (userId: string) => {
+    const userToDelete = users.find((u) => u.id === userId);
+    const updatedUsers = users.filter((user) => user.id !== userId);
+    setUsers(updatedUsers);
+    filterUsers(searchQuery, selectedRole, selectedAge, updatedUsers);
+
+    toast({
+      title: "Utilisateur supprimé",
+      description: userToDelete
+        ? `${userToDelete.prenoms} ${userToDelete.nom} a été supprimé`
+        : "L'utilisateur a été supprimé",
+      variant: "destructive",
+    });
+  };
+
   return (
     <ResponsiveLayout navItems={navItems} header={<UsersHeader />}>
       <div className="flex-1 px-4 lg:px-6 py-4 lg:py-6">
