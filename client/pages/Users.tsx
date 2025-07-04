@@ -60,7 +60,8 @@ const mockUsers: User[] = [
 ];
 
 function UsersPage() {
-  const { canAddUsers } = useAuth();
+  const { canAddUsers, isOwner } = useAuth();
+  const navItems = getMainNavItems("users", isOwner);
   const [users, setUsers] = useState<User[]>(mockUsers);
   const [filteredUsers, setFilteredUsers] = useState<User[]>(mockUsers);
   const [searchQuery, setSearchQuery] = useState("");
