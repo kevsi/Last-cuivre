@@ -1,10 +1,11 @@
-import React from "react";
-import { Bell, User, LogOut, ChevronDown } from "lucide-react";
+import React, { useState } from "react";
+import { Bell, User, LogOut, ChevronDown, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNotificationContext } from "@/main";
 import { useAuth } from "@/contexts/AuthContext";
 import { useManagerLogout } from "@/hooks/use-manager-logout";
+import { UsersModal } from "@/components/users/UsersModal";
 import {
   DropdownMenu,
   DropdownMenuContent,
