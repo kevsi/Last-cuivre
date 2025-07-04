@@ -8,27 +8,10 @@ import { useResponsive } from "@/hooks/use-responsive";
 import { getMainNavItems } from "@/lib/main-navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
-const navItems: NavItem[] = [
-  {
-    href: "/dashboard",
-    icon: Grid3x3,
-    label: "Dashboard",
-    isActive: true,
-  },
-  {
-    href: "/new-order",
-    icon: Plus,
-    label: "Nouveau",
-  },
-  {
-    href: "/orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-];
-
 export default function Dashboard() {
   const { getSpacing, getTextSize, isMobile } = useResponsive();
+  const { isOwner } = useAuth();
+  const navItems = getMainNavItems("dashboard", isOwner);
 
   return (
     <ResponsiveLayout navItems={navItems} header={<DashboardHeader />}>
