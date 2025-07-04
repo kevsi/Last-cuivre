@@ -21,6 +21,8 @@ export interface Article {
 
 const ManagerArticles: React.FC = () => {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("articles", isOwner);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
