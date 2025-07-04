@@ -23,10 +23,21 @@ export function DeleteUserModal({
   user,
   onConfirm,
 }: DeleteUserModalProps) {
-  const handleConfirm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirm = async () => {
     if (user) {
-      onConfirm(user.id);
-      onClose();
+      setIsLoading(true);
+
+      try {
+        // Simuler un délai API
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        onConfirm(user.id);
+        onClose();
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
