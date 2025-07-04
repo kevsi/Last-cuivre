@@ -64,8 +64,7 @@ const App = () => {
             <Sonner />
             <BrowserRouter>
               <SessionManager />
-              <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><Spinner size="lg" /></div>}>
-                <Routes>
+              <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route
                   path="/"
