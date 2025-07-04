@@ -92,9 +92,18 @@ export const ManagerOrdersHeader: React.FC<ManagerOrdersHeaderProps> = ({
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">Gérant</p>
+                  <p className="text-sm font-medium leading-none">
+                    {user ? `${user.prenoms} ${user.nom}` : "Manager"}
+                  </p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    gerant@restaurant.com
+                    {user?.email || "manager@restaurant.com"}
+                  </p>
+                  <p className="text-xs leading-none text-dashboard-yellow font-semibold">
+                    {user?.role === "owner"
+                      ? "Supa Admin"
+                      : user?.role === "manager"
+                        ? "Manager"
+                        : "Employé"}
                   </p>
                 </div>
               </DropdownMenuLabel>
