@@ -125,8 +125,22 @@ function UsersPage() {
     action: "view" | "edit" | "delete",
     userId: string,
   ) => {
-    console.log(`${action} user with ID: ${userId}`);
-    // Implement action handlers here
+    const user = users.find((u) => u.id === userId);
+    if (!user) return;
+
+    setSelectedUser(user);
+
+    switch (action) {
+      case "view":
+        setIsViewModalOpen(true);
+        break;
+      case "edit":
+        setIsEditModalOpen(true);
+        break;
+      case "delete":
+        setIsDeleteModalOpen(true);
+        break;
+    }
   };
 
   const handleNewUser = () => {
