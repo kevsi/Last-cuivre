@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Edit } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
 
 interface EditUserModalProps {
   isOpen: boolean;
