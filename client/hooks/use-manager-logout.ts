@@ -67,6 +67,7 @@ export function useManagerLogout() {
   return {
     handleManagerLogout,
     handleQuickLogout,
+    isLoggingOut,
     isManager: user?.role === "manager" || user?.role === "owner",
   };
 }
