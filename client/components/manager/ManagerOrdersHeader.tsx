@@ -23,13 +23,16 @@ export const ManagerOrdersHeader: React.FC<ManagerOrdersHeaderProps> = ({
   leftAction,
 }) => {
   const { showNotifications, setShowNotifications } = useNotificationContext();
+  const { user } = useAuth();
+  const { handleManagerLogout } = useManagerLogout();
+
+  const getUserInitials = () => {
+    if (!user) return "M";
+    return `${user.prenoms.charAt(0)}${user.nom.charAt(0)}`.toUpperCase();
+  };
 
   const handleNotificationClick = () => {
     setShowNotifications(!showNotifications);
-  };
-
-  const handleLogout = () => {
-    console.log("Déconnexion");
   };
 
   return (
