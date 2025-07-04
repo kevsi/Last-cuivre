@@ -156,8 +156,11 @@ function UsersPage() {
   };
 
   const handleAddUser = (userData: UserFormData) => {
+    // Générer un ID unique basé sur le timestamp et un nombre aléatoire
+    const newId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
     const newUser: User = {
-      id: (users.length + 1).toString(),
+      id: newId,
       ...userData,
     };
 
