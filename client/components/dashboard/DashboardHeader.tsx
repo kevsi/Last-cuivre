@@ -121,6 +121,15 @@ export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
                 <User className="mr-2 h-4 w-4" />
                 <span>Profil</span>
               </DropdownMenuItem>
+              {isOwner && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setShowUsersModal(true)}>
+                    <Users className="mr-2 h-4 w-4" />
+                    <span>Gestion Utilisateurs</span>
+                  </DropdownMenuItem>
+                </>
+              )}
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
