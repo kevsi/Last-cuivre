@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { User } from "@/pages/Users";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,7 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, Loader2 } from "lucide-react";
 
 interface DeleteUserModalProps {
   isOpen: boolean;
