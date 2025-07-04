@@ -6,25 +6,6 @@ import ManagerProductDetailsModal from "../components/manager/ManagerProductDeta
 import { getManagerNavItems } from "@/lib/manager-navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-    isActive: true,
-  },
-];
-
 // Mock product data - in real app this would come from API
 const mockProducts = {
   "1": {
