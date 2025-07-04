@@ -152,7 +152,7 @@ function UsersPage() {
       });
       return;
     }
-    setIsModalOpen(true);
+    setIsAddModalOpen(true);
   };
 
   const handleAddUser = (userData: UserFormData) => {
