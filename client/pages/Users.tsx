@@ -153,43 +153,37 @@ function UsersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dashboard-gray flex">
-      <UsersSidebar />
+    <ResponsiveLayout navItems={navItems} header={<UsersHeader />}>
+      <div className="flex-1 px-4 lg:px-6 py-4 lg:py-6">
+        <h1 className="text-lg lg:text-xl font-semibold text-dashboard-dark mb-4 sm:mb-5 lg:mb-6 pt-2 sm:pt-3 font-poppins">
+          Utilisateurs
+        </h1>
 
-      <main className="flex-1 flex flex-col">
-        <UsersHeader />
-
-        <div className="flex-1 px-4 lg:px-6 py-4 lg:py-6">
-          <h1 className="text-lg lg:text-xl font-semibold text-dashboard-dark mb-4 sm:mb-5 lg:mb-6 pt-2 sm:pt-3 font-poppins">
-            Utilisateurs
-          </h1>
-
-          {!canAddUsers && (
-            <div className="mb-4">
-              <PermissionAlert
-                message="Vous pouvez consulter les utilisateurs mais seul le Supa Admin peut en ajouter"
-                requiredRole="Supa Admin"
-              />
-            </div>
-          )}
-
-          <UsersFilters
-            searchQuery={searchQuery}
-            selectedRole={selectedRole}
-            selectedAge={selectedAge}
-            totalUsers={users.length}
-            onSearch={handleSearch}
-            onRoleFilter={handleRoleFilter}
-            onAgeFilter={handleAgeFilter}
-            onNewUser={handleNewUser}
-            canAddUsers={canAddUsers}
-          />
-
-          <div className="mt-4 lg:mt-6">
-            <UsersTable users={filteredUsers} onUserAction={handleUserAction} />
+        {!canAddUsers && (
+          <div className="mb-4">
+            <PermissionAlert
+              message="Vous pouvez consulter les utilisateurs mais seul le Supa Admin peut en ajouter"
+              requiredRole="Supa Admin"
+            />
           </div>
+        )}
+
+        <UsersFilters
+          searchQuery={searchQuery}
+          selectedRole={selectedRole}
+          selectedAge={selectedAge}
+          totalUsers={users.length}
+          onSearch={handleSearch}
+          onRoleFilter={handleRoleFilter}
+          onAgeFilter={handleAgeFilter}
+          onNewUser={handleNewUser}
+          canAddUsers={canAddUsers}
+        />
+
+        <div className="mt-4 lg:mt-6">
+          <UsersTable users={filteredUsers} onUserAction={handleUserAction} />
         </div>
-      </main>
+      </div>
 
       {canAddUsers && (
         <AddUserModal
@@ -198,7 +192,7 @@ function UsersPage() {
           onAddUser={handleAddUser}
         />
       )}
-    </div>
+    </ResponsiveLayout>
   );
 }
 
