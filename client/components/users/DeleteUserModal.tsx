@@ -79,15 +79,23 @@ export function DeleteUserModal({
 
           {/* Actions */}
           <div className="flex justify-end gap-2 pt-4">
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={onClose} disabled={isLoading}>
               Annuler
             </Button>
             <Button
               variant="destructive"
               onClick={handleConfirm}
               className="bg-red-600 hover:bg-red-700"
+              disabled={isLoading}
             >
-              Supprimer
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Suppression...
+                </>
+              ) : (
+                "Supprimer"
+              )}
             </Button>
           </div>
         </div>
