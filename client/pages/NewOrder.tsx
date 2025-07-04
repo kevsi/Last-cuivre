@@ -22,27 +22,10 @@ export interface CartItem extends MenuItem {
   quantity: number;
 }
 
-const navItems: NavItem[] = [
-  {
-    href: "/dashboard",
-    icon: Grid3x3,
-    label: "Dashboard",
-  },
-  {
-    href: "/new-order",
-    icon: Plus,
-    label: "Nouveau",
-    isActive: true,
-  },
-  {
-    href: "/orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-];
-
 export default function NewOrder() {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getMainNavItems("new-order", isOwner);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [tableNumber, setTableNumber] = useState("T12");
   const [tip, setTip] = useState(500);
