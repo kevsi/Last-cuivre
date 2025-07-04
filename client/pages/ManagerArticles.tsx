@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
-import { LayoutDashboard, ShoppingCart, Box } from "lucide-react";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { ManagerOrdersHeader } from "@/components/manager/ManagerOrdersHeader";
 import { ManagerArticlesFilters } from "@/components/manager/ManagerArticlesFilters";
 import { ManagerArticlesGrid } from "@/components/manager/ManagerArticlesGrid";
@@ -10,6 +8,8 @@ import { NewArticleModal } from "@/components/manager/NewArticleModal";
 import { useArticles, useCreateArticle } from "@/hooks/api";
 import { ArticleFilters } from "@/types/api";
 import { ArticlesGridSkeleton } from "@/components/ui/loaders";
+import { getManagerNavItems } from "@/lib/manager-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface Article {
   id: string;
