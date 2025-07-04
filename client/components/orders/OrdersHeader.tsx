@@ -22,8 +22,9 @@ interface OrdersHeaderProps {
 
 export const OrdersHeader: React.FC<OrdersHeaderProps> = ({ leftAction }) => {
   const { showNotifications, setShowNotifications } = useNotificationContext();
-  const { user } = useAuth();
+  const { user, isOwner } = useAuth();
   const { handleLogout } = useLogout();
+  const [showUsersModal, setShowUsersModal] = useState(false);
 
   const getUserInitials = () => {
     if (!user) return "U";
