@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { UsersSidebar } from "@/components/users/UsersSidebar";
 import { UsersHeader } from "@/components/users/UsersHeader";
 import { UsersFilters } from "@/components/users/UsersFilters";
 import { UsersTable } from "@/components/users/UsersTable";
 import { AddUserModal, UserFormData } from "@/components/users/AddUserModal";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PermissionAlert } from "@/components/ui/permission-alert";
+import { ResponsiveLayout } from "@/components/ui/responsive-layout";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/components/ui/use-toast";
+import { getMainNavItems } from "@/lib/main-navigation";
 
 export interface User {
   id: string;
