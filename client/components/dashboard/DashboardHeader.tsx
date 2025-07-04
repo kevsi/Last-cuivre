@@ -24,7 +24,7 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
   const { showNotifications, setShowNotifications } = useNotificationContext();
   const { user } = useAuth();
-  const { handleLogout } = useLogout();
+  const { handleLogout, isLoggingOut } = useLogout();
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const handleNotificationClick = () => {
