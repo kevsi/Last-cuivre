@@ -130,6 +130,14 @@ export const OrdersHeader: React.FC<OrdersHeaderProps> = ({ leftAction }) => {
           </DropdownMenu>
         </div>
       </div>
+
+      {/* Users Modal */}
+      {isOwner && (
+        <UsersModal
+          isOpen={showUsersModal}
+          onClose={() => setShowUsersModal(false)}
+        />
+      )}
     </header>
   );
 };
