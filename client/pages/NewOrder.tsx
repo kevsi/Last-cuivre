@@ -1,14 +1,14 @@
-import { Grid3x3, Plus, ShoppingCart } from "lucide-react";
 import { NewOrderHeader } from "@/components/neworder/NewOrderHeader";
 import { MenuFilters } from "@/components/neworder/MenuFilters";
 import { MenuGrid } from "@/components/neworder/MenuGrid";
 import { OrderCart } from "@/components/neworder/OrderCart";
 import { OrderSuccessModal } from "@/components/neworder/OrderSuccessModal";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { SavingAnimation } from "@/components/ui/saving-animation";
 import { useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
+import { getMainNavItems } from "@/lib/main-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface MenuItem {
   id: string;
