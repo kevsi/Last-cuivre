@@ -31,6 +31,7 @@ export function EditUserModal({
   user,
   onSave,
 }: EditUserModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     nom: "",
     prenoms: "",
