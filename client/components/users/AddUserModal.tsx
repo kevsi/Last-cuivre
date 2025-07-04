@@ -38,6 +38,7 @@ export function AddUserModal({
   onClose,
   onAddUser,
 }: AddUserModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<UserFormData>({
     nom: "",
     prenoms: "",
