@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
@@ -9,8 +10,10 @@ import { toast } from "@/components/ui/use-toast";
 export function useManagerLogout() {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const handleManagerLogout = () => {
+  const handleManagerLogout = async () => {
+    setIsLoggingOut(true);
     const userName = user ? `${user.prenoms} ${user.nom}` : "Manager";
 
     // Nettoyage spécifique à l'environnement manager
