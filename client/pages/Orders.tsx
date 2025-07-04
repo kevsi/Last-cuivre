@@ -21,27 +21,10 @@ export interface Order {
   createdAt: string;
 }
 
-const navItems: NavItem[] = [
-  {
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-  },
-  {
-    href: "/new-order",
-    icon: Plus,
-    label: "Nouveau",
-  },
-  {
-    href: "/orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-    isActive: true,
-  },
-];
-
 const Orders: React.FC = () => {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getMainNavItems("orders", isOwner);
   const [searchQuery, setSearchQuery] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
