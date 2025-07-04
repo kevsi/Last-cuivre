@@ -110,7 +110,7 @@ export function UsersTable({ users, onUserAction }: UsersTableProps) {
                   {/* Email */}
                   <div className="text-center">
                     <span className="text-sm font-bold text-black font-poppins">
-                      Pierre
+                      {user.email}
                     </span>
                   </div>
 
