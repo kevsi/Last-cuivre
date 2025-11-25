@@ -1,4 +1,4 @@
-import { Search, Bell, User, LogOut, ChevronDown } from "lucide-react";
+import { Search, Bell, User, LogOut, ChevronDown, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
   const { showNotifications, setShowNotifications } = useNotificationContext();
   const { user } = useAuth();
-  const { handleLogout } = useLogout();
+  const { handleLogout, isLoggingOut } = useLogout();
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const handleNotificationClick = () => {
@@ -120,9 +120,19 @@ export function DashboardHeader({ leftAction }: DashboardHeaderProps) {
                 <span>Profil</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="text-red-600">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Se déconnecter</span>
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="text-red-600"
+                disabled={isLoggingOut}
+              >
+                {isLoggingOut ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <LogOut className="mr-2 h-4 w-4" />
+                )}
+                <span>
+                  {isLoggingOut ? "Déconnexion..." : "Se déconnecter"}
+                </span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

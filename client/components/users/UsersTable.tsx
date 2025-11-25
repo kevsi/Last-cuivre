@@ -66,7 +66,7 @@ export function UsersTable({ users, onUserAction }: UsersTableProps) {
           <div className="space-y-2 sm:space-y-3">
             {users.map((user, index) => (
               <div
-                key={user.id}
+                key={`user-${user.id}-${index}`}
                 className="bg-white rounded-lg border border-[#E5E7EB] shadow-sm p-2 sm:p-3"
               >
                 <div className="grid grid-cols-7 gap-1 sm:gap-2 items-center min-w-[800px]">
@@ -110,7 +110,7 @@ export function UsersTable({ users, onUserAction }: UsersTableProps) {
                   {/* Email */}
                   <div className="text-center">
                     <span className="text-sm font-bold text-black font-poppins">
-                      Pierre
+                      {user.email}
                     </span>
                   </div>
 

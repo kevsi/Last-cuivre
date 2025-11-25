@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
-import { LayoutDashboard, ShoppingCart, Box } from "lucide-react";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { ManagerOrdersHeader } from "@/components/manager/ManagerOrdersHeader";
 import { ManagerArticlesFilters } from "@/components/manager/ManagerArticlesFilters";
 import { ManagerArticlesGrid } from "@/components/manager/ManagerArticlesGrid";
@@ -10,6 +8,8 @@ import { NewArticleModal } from "@/components/manager/NewArticleModal";
 import { useArticles, useCreateArticle } from "@/hooks/api";
 import { ArticleFilters } from "@/types/api";
 import { ArticlesGridSkeleton } from "@/components/ui/loaders";
+import { getManagerNavItems } from "@/lib/manager-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface Article {
   id: string;
@@ -19,27 +19,10 @@ export interface Article {
   category: string;
 }
 
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-    isActive: true,
-  },
-];
-
 const ManagerArticles: React.FC = () => {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("articles", isOwner);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [priceFilter, setPriceFilter] = useState("");

@@ -1,34 +1,17 @@
-import { Grid3x3, Plus, ShoppingCart } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { OrderTable } from "@/components/dashboard/OrderTable";
 import { HistorySidebar } from "@/components/dashboard/HistorySidebar";
 import { PromoBanner } from "@/components/dashboard/PromoBanner";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { useResponsive } from "@/hooks/use-responsive";
-
-const navItems: NavItem[] = [
-  {
-    href: "/dashboard",
-    icon: Grid3x3,
-    label: "Dashboard",
-    isActive: true,
-  },
-  {
-    href: "/new-order",
-    icon: Plus,
-    label: "Nouveau",
-  },
-  {
-    href: "/orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-];
+import { getMainNavItems } from "@/lib/main-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Dashboard() {
   const { getSpacing, getTextSize, isMobile } = useResponsive();
+  const { isOwner } = useAuth();
+  const navItems = getMainNavItems("dashboard", isOwner);
 
   return (
     <ResponsiveLayout navItems={navItems} header={<DashboardHeader />}>

@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { UsersSidebar } from "@/components/users/UsersSidebar";
 import { UsersHeader } from "@/components/users/UsersHeader";
 import { UsersFilters } from "@/components/users/UsersFilters";
 import { UsersTable } from "@/components/users/UsersTable";
 import { AddUserModal, UserFormData } from "@/components/users/AddUserModal";
+import { ViewUserModal } from "@/components/users/ViewUserModal";
+import { EditUserModal } from "@/components/users/EditUserModal";
+import { DeleteUserModal } from "@/components/users/DeleteUserModal";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PermissionAlert } from "@/components/ui/permission-alert";
+import { ResponsiveLayout } from "@/components/ui/responsive-layout";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "@/components/ui/use-toast";
+import { getMainNavItems } from "@/lib/main-navigation";
 
 export interface User {
   id: string;
@@ -59,13 +63,18 @@ const mockUsers: User[] = [
 ];
 
 function UsersPage() {
-  const { canAddUsers } = useAuth();
+  const { canAddUsers, isOwner } = useAuth();
+  const navItems = getMainNavItems("users", isOwner);
   const [users, setUsers] = useState<User[]>(mockUsers);
   const [filteredUsers, setFilteredUsers] = useState<User[]>(mockUsers);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRole, setSelectedRole] = useState<string>("all");
   const [selectedAge, setSelectedAge] = useState<string>("all");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -116,8 +125,22 @@ function UsersPage() {
     action: "view" | "edit" | "delete",
     userId: string,
   ) => {
-    console.log(`${action} user with ID: ${userId}`);
-    // Implement action handlers here
+    const user = users.find((u) => u.id === userId);
+    if (!user) return;
+
+    setSelectedUser(user);
+
+    switch (action) {
+      case "view":
+        setIsViewModalOpen(true);
+        break;
+      case "edit":
+        setIsEditModalOpen(true);
+        break;
+      case "delete":
+        setIsDeleteModalOpen(true);
+        break;
+    }
   };
 
   const handleNewUser = () => {
@@ -129,12 +152,15 @@ function UsersPage() {
       });
       return;
     }
-    setIsModalOpen(true);
+    setIsAddModalOpen(true);
   };
 
   const handleAddUser = (userData: UserFormData) => {
+    // Générer un ID unique basé sur le timestamp et un nombre aléatoire
+    const newId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
     const newUser: User = {
-      id: (users.length + 1).toString(),
+      id: newId,
       ...userData,
     };
 
@@ -150,53 +176,96 @@ function UsersPage() {
     });
   };
 
+  const handleEditUser = (userId: string, userData: Partial<User>) => {
+    const updatedUsers = users.map((user) =>
+      user.id === userId ? { ...user, ...userData } : user,
+    );
+    setUsers(updatedUsers);
+    filterUsers(searchQuery, selectedRole, selectedAge, updatedUsers);
+
+    toast({
+      title: "Utilisateur modifié",
+      description: "Les informations ont été mises à jour avec succès",
+    });
+  };
+
+  const handleDeleteUser = (userId: string) => {
+    const userToDelete = users.find((u) => u.id === userId);
+    const updatedUsers = users.filter((user) => user.id !== userId);
+    setUsers(updatedUsers);
+    filterUsers(searchQuery, selectedRole, selectedAge, updatedUsers);
+
+    toast({
+      title: "Utilisateur supprimé",
+      description: userToDelete
+        ? `${userToDelete.prenoms} ${userToDelete.nom} a été supprimé`
+        : "L'utilisateur a été supprimé",
+      variant: "destructive",
+    });
+  };
+
   return (
-    <div className="min-h-screen bg-dashboard-gray flex">
-      <UsersSidebar />
+    <ResponsiveLayout navItems={navItems} header={<UsersHeader />}>
+      <div className="flex-1 px-4 lg:px-6 py-4 lg:py-6">
+        <h1 className="text-lg lg:text-xl font-semibold text-dashboard-dark mb-4 sm:mb-5 lg:mb-6 pt-2 sm:pt-3 font-poppins">
+          Utilisateurs
+        </h1>
 
-      <main className="flex-1 flex flex-col">
-        <UsersHeader />
-
-        <div className="flex-1 px-4 lg:px-6 py-4 lg:py-6">
-          <h1 className="text-lg lg:text-xl font-semibold text-dashboard-dark mb-4 sm:mb-5 lg:mb-6 pt-2 sm:pt-3 font-poppins">
-            Utilisateurs
-          </h1>
-
-          {!canAddUsers && (
-            <div className="mb-4">
-              <PermissionAlert
-                message="Vous pouvez consulter les utilisateurs mais seul le Supa Admin peut en ajouter"
-                requiredRole="Supa Admin"
-              />
-            </div>
-          )}
-
-          <UsersFilters
-            searchQuery={searchQuery}
-            selectedRole={selectedRole}
-            selectedAge={selectedAge}
-            totalUsers={users.length}
-            onSearch={handleSearch}
-            onRoleFilter={handleRoleFilter}
-            onAgeFilter={handleAgeFilter}
-            onNewUser={handleNewUser}
-            canAddUsers={canAddUsers}
-          />
-
-          <div className="mt-4 lg:mt-6">
-            <UsersTable users={filteredUsers} onUserAction={handleUserAction} />
+        {!canAddUsers && (
+          <div className="mb-4">
+            <PermissionAlert
+              message="Vous pouvez consulter les utilisateurs mais seul le Supa Admin peut en ajouter"
+              requiredRole="Supa Admin"
+            />
           </div>
-        </div>
-      </main>
+        )}
 
+        <UsersFilters
+          searchQuery={searchQuery}
+          selectedRole={selectedRole}
+          selectedAge={selectedAge}
+          totalUsers={users.length}
+          onSearch={handleSearch}
+          onRoleFilter={handleRoleFilter}
+          onAgeFilter={handleAgeFilter}
+          onNewUser={handleNewUser}
+          canAddUsers={canAddUsers}
+        />
+
+        <div className="mt-4 lg:mt-6">
+          <UsersTable users={filteredUsers} onUserAction={handleUserAction} />
+        </div>
+      </div>
+
+      {/* Modals */}
       {canAddUsers && (
         <AddUserModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
           onAddUser={handleAddUser}
         />
       )}
-    </div>
+
+      <ViewUserModal
+        isOpen={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        user={selectedUser}
+      />
+
+      <EditUserModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        user={selectedUser}
+        onSave={handleEditUser}
+      />
+
+      <DeleteUserModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        user={selectedUser}
+        onConfirm={handleDeleteUser}
+      />
+    </ResponsiveLayout>
   );
 }
 

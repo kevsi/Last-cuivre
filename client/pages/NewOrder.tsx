@@ -1,14 +1,14 @@
-import { Grid3x3, Plus, ShoppingCart } from "lucide-react";
 import { NewOrderHeader } from "@/components/neworder/NewOrderHeader";
 import { MenuFilters } from "@/components/neworder/MenuFilters";
 import { MenuGrid } from "@/components/neworder/MenuGrid";
 import { OrderCart } from "@/components/neworder/OrderCart";
 import { OrderSuccessModal } from "@/components/neworder/OrderSuccessModal";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { SavingAnimation } from "@/components/ui/saving-animation";
 import { useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
+import { getMainNavItems } from "@/lib/main-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface MenuItem {
   id: string;
@@ -22,27 +22,10 @@ export interface CartItem extends MenuItem {
   quantity: number;
 }
 
-const navItems: NavItem[] = [
-  {
-    href: "/dashboard",
-    icon: Grid3x3,
-    label: "Dashboard",
-  },
-  {
-    href: "/new-order",
-    icon: Plus,
-    label: "Nouveau",
-    isActive: true,
-  },
-  {
-    href: "/orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-];
-
 export default function NewOrder() {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getMainNavItems("new-order", isOwner);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [tableNumber, setTableNumber] = useState("T12");
   const [tip, setTip] = useState(500);

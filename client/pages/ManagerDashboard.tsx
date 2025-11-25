@@ -1,5 +1,4 @@
 import React from "react";
-import { LayoutDashboard, ShoppingCart, Box } from "lucide-react";
 import { ManagerHeader } from "../components/manager/ManagerHeader";
 import { StatisticsChart } from "../components/manager/StatisticsChart";
 import { StatsCards } from "../components/manager/StatsCards";
@@ -7,7 +6,8 @@ import { ManagerOrdersTable } from "../components/manager/ManagerOrdersTable";
 import { ManagerSessionManager } from "../components/manager/ManagerSessionManager";
 import { HistorySidebar } from "@/components/dashboard/HistorySidebar";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
+import { getManagerNavItems } from "@/lib/manager-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface ManagerOrder {
   id: string;
@@ -20,25 +20,6 @@ export interface ManagerOrder {
   serverAvatar: string;
   createdAt: string;
 }
-
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-    isActive: true,
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-  },
-];
 
 const sampleManagerOrders: ManagerOrder[] = [
   {
@@ -80,6 +61,9 @@ const sampleManagerOrders: ManagerOrder[] = [
 ];
 
 const ManagerDashboard: React.FC = () => {
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("dashboard", isOwner);
+
   return (
     <>
       <ManagerSessionManager />

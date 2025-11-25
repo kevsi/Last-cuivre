@@ -1,29 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ResponsiveLayout } from "../components/ui/responsive-layout";
-import { NavItem } from "../components/ui/responsive-sidebar";
-import { LayoutDashboard, ShoppingCart, Box } from "lucide-react";
 import { ManagerHeader } from "../components/manager/ManagerHeader";
 import ManagerProductDetailsModal from "../components/manager/ManagerProductDetailsModal";
-
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-    isActive: true,
-  },
-];
+import { getManagerNavItems } from "@/lib/manager-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 // Mock product data - in real app this would come from API
 const mockProducts = {
@@ -61,6 +42,8 @@ export default function ManagerProductDetails() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [product, setProduct] = useState<any>(null);
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("articles", isOwner);
 
   useEffect(() => {
     if (id && mockProducts[id as keyof typeof mockProducts]) {

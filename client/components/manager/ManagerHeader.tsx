@@ -1,5 +1,5 @@
 import React from "react";
-import { Bell, User, LogOut, ChevronDown } from "lucide-react";
+import { Bell, User, LogOut, ChevronDown, Loader2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useNotificationContext } from "@/main";
@@ -21,7 +21,7 @@ interface ManagerHeaderProps {
 export const ManagerHeader: React.FC<ManagerHeaderProps> = ({ leftAction }) => {
   const { showNotifications, setShowNotifications } = useNotificationContext();
   const { user } = useAuth();
-  const { handleManagerLogout } = useManagerLogout();
+  const { handleManagerLogout, isLoggingOut } = useManagerLogout();
 
   const getUserInitials = () => {
     if (!user) return "M";
@@ -102,9 +102,16 @@ export const ManagerHeader: React.FC<ManagerHeaderProps> = ({ leftAction }) => {
               <DropdownMenuItem
                 onClick={handleManagerLogout}
                 className="text-red-600"
+                disabled={isLoggingOut}
               >
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Se déconnecter</span>
+                {isLoggingOut ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <LogOut className="mr-2 h-4 w-4" />
+                )}
+                <span>
+                  {isLoggingOut ? "Déconnexion..." : "Se déconnecter"}
+                </span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

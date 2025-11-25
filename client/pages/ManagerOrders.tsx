@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
-import { LayoutDashboard, ShoppingCart, Box } from "lucide-react";
 import { ResponsiveLayout } from "@/components/ui/responsive-layout";
-import { NavItem } from "@/components/ui/responsive-sidebar";
 import { ManagerOrdersHeader } from "@/components/manager/ManagerOrdersHeader";
 import { ManagerOrdersFilters } from "@/components/manager/ManagerOrdersFilters";
 import { ManagerOrdersTable } from "@/components/manager/ManagerOrdersTable";
 import { ManagerSessionManager } from "@/components/manager/ManagerSessionManager";
 import { HistorySidebar } from "@/components/dashboard/HistorySidebar";
+import { getManagerNavItems } from "@/lib/manager-navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export interface ManagerOrder {
   id: string;
@@ -20,25 +20,6 @@ export interface ManagerOrder {
   serverAvatar: string;
   createdAt: string;
 }
-
-const navItems: NavItem[] = [
-  {
-    href: "/manager-dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-  },
-  {
-    href: "/manager-orders",
-    icon: ShoppingCart,
-    label: "Commandes",
-    isActive: true,
-  },
-  {
-    href: "/manager-articles",
-    icon: Box,
-    label: "Articles",
-  },
-];
 
 const sampleManagerOrders: ManagerOrder[] = [
   {
@@ -117,6 +98,8 @@ const sampleManagerOrders: ManagerOrder[] = [
 
 const ManagerOrders: React.FC = () => {
   const { notifications } = useNotifications();
+  const { isOwner } = useAuth();
+  const navItems = getManagerNavItems("orders", isOwner);
   const [orders, setOrders] = useState<ManagerOrder[]>(sampleManagerOrders);
   const [searchQuery, setSearchQuery] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
